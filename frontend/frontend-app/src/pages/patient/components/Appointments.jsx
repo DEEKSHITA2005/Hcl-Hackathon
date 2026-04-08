@@ -9,7 +9,8 @@ export default function Appointments() {
     doctorId: '',
     date: '',
     time: '',
-    reason: ''
+    reason: '',
+    mode: 'ONLINE'
   });
   const [statusMsg, setStatusMsg] = useState('');
 
@@ -45,42 +46,27 @@ export default function Appointments() {
 
   useEffect(() => {
     fetchAppointments();
+    
+    // Fetch all doctors to display their names in the appointment list
+    const patientToken = localStorage.getItem('patientToken');
+    fetch('http://localhost:5000/admin/getalldoctors', {
+      headers: { 'Authorization': `Bearer ${patientToken}` }
+    })
+      .then(async res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const text = await res.text();
+        try { return text ? JSON.parse(text) : []; }
+        catch { return []; }
+      })
+      .then(data => setDoctors(Array.isArray(data) ? data : []))
+      .catch(err => console.error('Failed to load doctors', err));
   }, []);
 
-  // Fetch doctors when modal opens
-  useEffect(() => {
-    if (showForm) {
-      const patientToken = localStorage.getItem('patientToken');
-      fetch('http://localhost:5000/admin/getalldoctors', {
-        headers: { 'Authorization': `Bearer ${patientToken}` }
-      })
-        .then(async res => {
-          if (!res.ok) {
-             throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          const text = await res.text();
-          try {
-             return text ? JSON.parse(text) : [];
-          } catch { // Ignore error for now, try to fix malformed array
-             console.error("Raw response that failed JSON parse:", text);
-             // Attempt to fix some common malformed JSON trailing issues if the backend is truncating/corrupting string
-             // Try to find the valid array part in the text
-             const validJsonMatch = text.match(/\[.*\]/s);
-             if (validJsonMatch) {
-                try {
-                   return JSON.parse(validJsonMatch[0]);
-                } catch {
-                   console.error("Could not parse extracted array text either.");
-                   return [];
-                }
-             }
-             return [];
-          }
-        })
-        .then(data => setDoctors(Array.isArray(data) ? data : []))
-        .catch(err => console.error('Failed to load doctors', err));
-    }
-  }, [showForm]);
+  const getDoctorName = (doctorId) => {
+    const doc = doctors.find(d => (d.doctor_id === doctorId || d.id === doctorId));
+    return doc ? `Dr. ${doc.name}` : 'Unknown Doctor';
+  };
+  // Remaining useEffect code handling modal can be omitted as it's handled on mount
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -105,7 +91,7 @@ export default function Appointments() {
         appointmentDate: date,
         appointmentTime: time,
         issue: reason,
-        mode: 'ONLINE',
+        mode: formData.mode,
         status: 'PENDING'
       };
 
@@ -125,7 +111,7 @@ export default function Appointments() {
         setTimeout(() => {
           setShowForm(false);
           setStatusMsg('');
-          setFormData({ doctorId: '', date: '', time: '', reason: '' });
+          setFormData({ doctorId: '', date: '', time: '', reason: '', mode: 'ONLINE' });
         }, 2000);
       } else {
         setStatusMsg(`Error: ${result}`);
@@ -165,11 +151,11 @@ export default function Appointments() {
                   </div>
                   <div>
                     <h4 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      {appt.doctor ? `Dr. ${appt.doctor.name}` : 'Unknown Doctor'} 
+                      {getDoctorName(appt.doctorId)}
                       <span className="patient-badge">{appt.status || 'Confirmed'}</span>
                     </h4>
                     <div style={{ display: 'flex', gap: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Stethoscope size={16}/> Cardiology</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Stethoscope size={16}/> {appt.issue || 'General Consultation'}</span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}><MapPin size={16}/> Room 302, Main Wing</span>
                     </div>
                   </div>
@@ -211,17 +197,41 @@ export default function Appointments() {
                 >
                   <option value="">-- Choose a Doctor --</option>
                   {doctors.map(doc => (
-                    <option key={doc.id} value={doc.id}>
+                    <option key={doc.doctor_id || doc.id} value={doc.doctor_id || doc.id}>
                       Dr. {doc.name}
                     </option>
                   ))}
                 </select>
               </div>
 
+              {/* Mode Dropdown */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <label style={{ fontSize: '0.875rem', fontWeight: '500', color: '#475569' }}>Consultation Mode</label>
+                <select
+                  name="mode"
+                  value={formData.mode}
+                  onChange={handleInputChange}
+                  required
+                  style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '1rem', background: 'white' }}
+                >
+                  <option value="ONLINE">Online</option>
+                  <option value="OFFLINE">Offline / In-person</option>
+                </select>
+              </div>
+
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   <label style={{ fontSize: '0.875rem', fontWeight: '500', color: '#475569' }}>Date</label>
-                  <input type="date" name="date" value={formData.date} onChange={handleInputChange} required style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '1rem' }} />
+                  <input 
+                    type="date" 
+                    name="date" 
+                    value={formData.date} 
+                    onChange={handleInputChange} 
+                    required 
+                    min={new Date().toISOString().split('T')[0]} 
+                    max={`${new Date().getFullYear()}-12-31`}
+                    style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '1rem' }} 
+                  />
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   <label style={{ fontSize: '0.875rem', fontWeight: '500', color: '#475569' }}>Time</label>

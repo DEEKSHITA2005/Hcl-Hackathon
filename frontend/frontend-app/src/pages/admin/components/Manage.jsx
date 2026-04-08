@@ -6,9 +6,9 @@ export default function Manage() {
   const [doctors, setDoctors] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
-    age: '',
-    gender: 'Male',
-    specialized: '',
+    experience: '',
+    mode: 'ONLINE',
+    specialization: '',
     email: '',
     phno: '',
     password: ''
@@ -48,10 +48,10 @@ export default function Manage() {
     try {
       const payload = {
         name: formData.name,
-        specialized: formData.specialized,
+        specialization: formData.specialization,
         email: formData.email,
-        age: parseInt(formData.age, 10),
-        gender: formData.gender,
+        experience: parseInt(formData.experience, 10) || 0,
+        mode: formData.mode,
         phno: formData.phno,
         password: formData.password
       };
@@ -69,7 +69,7 @@ export default function Manage() {
 
       if (res.ok) {
         alert("Doctor added successfully!");
-        setFormData({ name: '', age: '', gender: 'Male', specialized: '', email: '', phno: '', password: '' });
+        setFormData({ name: '', experience: '', mode: 'ONLINE', specialization: '', email: '', phno: '', password: '' });
         setIsModalOpen(false);
         fetchDoctors();
       } else {
@@ -177,21 +177,20 @@ export default function Manage() {
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>Specialization *</label>
-                  <input required name="specialized" value={formData.specialized} onChange={handleChange} type="text" maxLength="50" placeholder="e.g. Cardiology" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-light)', color: 'var(--text-main)' }} />
+                  <input required name="specialization" value={formData.specialization} onChange={handleChange} type="text" maxLength="50" placeholder="e.g. Cardiology" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-light)', color: 'var(--text-main)' }} />
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>Age *</label>
-                  <input required name="age" value={formData.age} onChange={handleChange} type="number" min="20" max="100" placeholder="35" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-light)', color: 'var(--text-main)' }} />
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>Experience (Years) *</label>
+                  <input required name="experience" value={formData.experience} onChange={handleChange} type="number" min="0" max="60" placeholder="5" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-light)', color: 'var(--text-main)' }} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>Gender *</label>
-                  <select required name="gender" value={formData.gender} onChange={handleChange} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-light)', color: 'var(--text-main)' }}>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>Mode *</label>
+                  <select required name="mode" value={formData.mode} onChange={handleChange} style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-light)', color: 'var(--text-main)' }}>
+                    <option value="ONLINE">Online</option>
+                    <option value="OFFLINE">Offline</option>
                   </select>
                 </div>
               </div>
