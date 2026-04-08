@@ -20,12 +20,15 @@ public class Doctor {
     private String phno;
     @Column(nullable = false)
     private String specialization;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Mode mode;
 
     public Doctor(){
 
     }
 
-    public Doctor(String phno, int doctor_id, String name, String email, String password, String specialization, int experience) {
+    public Doctor(String phno, int doctor_id, String name, String email, String password, String specialization, int experience,Mode mode) {
         this.phno = phno;
         this.doctor_id = doctor_id;
         this.name = name;
@@ -33,6 +36,7 @@ public class Doctor {
         this.password = password;
         this.specialization = specialization;
         this.experience = experience;
+        this.mode = mode;
     }
 
     public int getExperience() {
@@ -93,5 +97,13 @@ public class Doctor {
 
     @Column(nullable = true)
     private int experience;
+
+	public Mode getMode() {
+		return mode;
+	}
+
+	public void setMode(Mode mode) {
+		this.mode = mode;
+	}
 
 }

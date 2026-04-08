@@ -40,11 +40,11 @@ public class Patient {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getDob() {
+	public int getAge() {
 		return age;
 	}
-	public void setDob(int dob) {
-		this.age = dob;
+	public void setAge(int age) {
+		this.age = age;
 	}
 	public String getGender() {
 		return gender;
@@ -70,6 +70,6 @@ public class Patient {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	
 }
