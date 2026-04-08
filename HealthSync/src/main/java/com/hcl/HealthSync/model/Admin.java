@@ -3,7 +3,11 @@ package com.hcl.HealthSync.model;
 import jakarta.persistence.*;
 
 @Entity
+<<<<<<< HEAD
 @Table(name = "admin_table")
+=======
+@Table(name = "admins")
+>>>>>>> d33e4af793bb679765fd92251dd4eb493f15497b
 public class Admin {
 
     @Id
