@@ -1,4 +1,7 @@
 package com.hcl.HealthSync.service;
 
-public interface DoctorService {
+import com.hcl.HealthSync.model.Doctor;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DoctorService  {
 }

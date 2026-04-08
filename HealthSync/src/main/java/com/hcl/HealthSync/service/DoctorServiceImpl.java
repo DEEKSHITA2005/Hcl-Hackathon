@@ -1,4 +1,7 @@
 package com.hcl.HealthSync.service;
 
-public class DoctorServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class DoctorServiceImpl implements DoctorService{
 }
