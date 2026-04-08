@@ -1,4 +1,11 @@
 package com.hcl.HealthSync.service;
 
-public interface PatientService {
+import com.hcl.HealthSync.model.Patient;
+
+public interface PatientService
+{
+
+    Patient savePatient(Patient p);
+
+    String verify(String email, String password);
 }

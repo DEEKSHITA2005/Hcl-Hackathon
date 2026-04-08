@@ -1,4 +1,10 @@
 package com.hcl.HealthSync.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.hcl.HealthSync.model.Admin;
 
-public interface AdminRepository {
+import java.util.Optional;
+
+public interface AdminRepository extends JpaRepository<Admin, Integer> {
+
+    Optional<Admin> findByEmail(String email);
 }

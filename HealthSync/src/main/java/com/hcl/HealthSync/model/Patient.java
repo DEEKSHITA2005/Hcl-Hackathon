@@ -16,14 +16,14 @@ public class Patient {
 	@Column(nullable = false, length = 50)
 	private String name;
 	@Column(nullable = false)
-	private int dob;
+	private int age;
 	@Column(nullable = false, length = 10)
 	private String gender;
 	@Column(nullable = false, length = 50)
 	private String email;
 	@Column(nullable = false, length = 10)
 	private String phno;
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false)
 	private String password;
 	public Patient(){
 		
@@ -41,10 +41,10 @@ public class Patient {
 		this.name = name;
 	}
 	public int getDob() {
-		return dob;
+		return age;
 	}
 	public void setDob(int dob) {
-		this.dob = dob;
+		this.age = dob;
 	}
 	public String getGender() {
 		return gender;
