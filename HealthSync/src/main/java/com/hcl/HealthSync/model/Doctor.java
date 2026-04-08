@@ -8,7 +8,7 @@ public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int doctor_id;
+    private Integer doctor_id;
 
     @Column(nullable = false,length = 50)
     private String name;
@@ -28,7 +28,7 @@ public class Doctor {
 
     }
 
-    public Doctor(String phno, int doctor_id, String name, String email, String password, String specialization, int experience,Mode mode) {
+    public Doctor(String phno, Integer doctor_id, String name, String email, String password, String specialization, Integer experience,Mode mode) {
         this.phno = phno;
         this.doctor_id = doctor_id;
         this.name = name;
@@ -39,11 +39,11 @@ public class Doctor {
         this.mode = mode;
     }
 
-    public int getExperience() {
+    public Integer getExperience() {
         return experience;
     }
 
-    public void setExperience(int experience) {
+    public void setExperience(Integer experience) {
         this.experience = experience;
     }
 
@@ -87,16 +87,16 @@ public class Doctor {
         this.name = name;
     }
 
-    public int getDoctor_id() {
+    public Integer getDoctor_id() {
         return doctor_id;
     }
 
-    public void setDoctor_id(int doctor_id) {
+    public void setDoctor_id(Integer doctor_id) {
         this.doctor_id = doctor_id;
     }
 
     @Column(nullable = true)
-    private int experience;
+    private Integer experience;
 
 	public Mode getMode() {
 		return mode;

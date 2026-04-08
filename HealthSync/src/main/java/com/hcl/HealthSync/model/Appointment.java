@@ -27,7 +27,7 @@ public class Appointment {
 	    private Long doctorId;
 
 	  
-	    @Column(name = "slot_id", nullable = false, unique = true) 
+	    @Column(name = "slot_id", nullable = true) 
 	    private Long slotId;
 
 	   
@@ -42,6 +42,15 @@ public class Appointment {
 
 	    @Column(name = "booking_date", nullable = false)
 	    private LocalDateTime bookingDate;
+	    
+	    @Column(name = "appointment_date")
+	    private String appointmentDate;
+	    
+	    @Column(name = "appointment_time")
+	    private String appointmentTime;
+	    
+	    @Column(name = "issue")
+	    private String issue;
 
 		public Appointment() {
 			super();
@@ -101,6 +110,30 @@ public class Appointment {
 
 		public void setBookingDate(LocalDateTime bookingDate) {
 			this.bookingDate = bookingDate;
+		}
+		
+		public String getAppointmentDate() {
+			return appointmentDate;
+		}
+		
+		public void setAppointmentDate(String appointmentDate) {
+			this.appointmentDate = appointmentDate;
+		}
+		
+		public String getAppointmentTime() {
+			return appointmentTime;
+		}
+		
+		public void setAppointmentTime(String appointmentTime) {
+			this.appointmentTime = appointmentTime;
+		}
+		
+		public String getIssue() {
+			return issue;
+		}
+		
+		public void setIssue(String issue) {
+			this.issue = issue;
 		}
 
 	

@@ -32,12 +32,12 @@ public class MyUserDetailsService implements UserDetailsService
             System.out.println("Admin Found");
             return new AdminPrincipal(admin);
         }
-//
-//        Doctor doctor = doctorRepository.findByEmail(email);
-//        if(doctor != null){
-//            System.out.println("Doctor Found");
-//            return new DoctorPrincipal(doctor);
-//        }
+
+        Doctor doctor = doctorRepository.findByEmail(email);
+        if(doctor != null){
+            System.out.println("Doctor Found");
+            return new DoctorPrincipal(doctor);
+        }
 
 
         Patient patient = patientRepository.findByEmail(email);
