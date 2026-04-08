@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table
+@Table(name="Patient_Table")
 public class Patient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +17,11 @@ public class Patient {
 	private String name;
 	@Column(nullable = false)
 	private int dob;
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 10)
 	private String gender;
 	@Column(nullable = false, length = 50)
 	private String email;
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 10)
 	private String phno;
 	@Column(nullable = false, length = 20)
 	private String password;
