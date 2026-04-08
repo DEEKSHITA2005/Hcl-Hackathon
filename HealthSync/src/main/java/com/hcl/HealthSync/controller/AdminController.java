@@ -21,8 +21,8 @@ public class AdminController {
 
     // Login Admin
     @PostMapping("/login")
-    public Admin login(@RequestParam String email,
+    public String login(@RequestParam String email,
                        @RequestParam String password) {
-        return adminService.login(email, password);
+        return adminService.verify(email, password);
     }
 }

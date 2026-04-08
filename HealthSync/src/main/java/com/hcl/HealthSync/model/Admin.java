@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 
 @Table(name = "admin_table")
 
-
-
 public class Admin {
 
     @Id
