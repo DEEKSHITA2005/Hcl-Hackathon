@@ -1,0 +1,93 @@
+/* src/pages/DoctorDashboard.css */
+
+.doc-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--background-light);
+}
+
+.doc-sidebar {
+  width: 260px;
+  background: #0f172a; /* Dark sidebar for doctors */
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-sidebar .logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  padding: 0 1rem;
+  text-decoration: none;
+}
+
+.doc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.doc-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.doc-nav-item:hover, 
+.doc-nav-item.active {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.doc-main {
+  flex: 1;
+  padding: 2rem 3rem;
+  overflow-y: auto;
+}
+
+.doc-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.doc-stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.doc-schedule-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+}
+
+.doc-patient-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.doc-patient-row:last-child {
+  border-bottom: none;
+}
