@@ -1,13 +1,14 @@
 package com.hcl.HealthSync.service;
 
 
-<<<<<<< HEAD
+
+import com.hcl.HealthSync.model.Patient;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
-public class AdminServiceImpl implements AdminService{
-
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,22 +20,27 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JWTService jwtService;
 
     @Override
     public Admin register(Admin admin) {
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         return adminRepository.save(admin);
     }
 
     @Override
-    public Admin login(String email, String password) {
-        Admin admin = adminRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
+    public String verify(String email, String password) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
-        if (!admin.getPassword().equals(password)) {
-            throw new RuntimeException("Invalid password");
+        if(authentication.isAuthenticated()){
+            Admin admin = adminRepository.findByEmail(email);
+            return jwtService.generateToken(email,"ROLE_PATIENT",admin.getId());
         }
-
-        return admin;
+        return "FAiled";
     }
->>>>>>> d33e4af793bb679765fd92251dd4eb493f15497b
 }

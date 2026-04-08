@@ -27,11 +27,11 @@ public class MyUserDetailsService implements UserDetailsService
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // TODO Auto-generated method stub
 
-//        Admin admin = adminRepository.findByEmail(email);
-//        if(admin != null){
-//            System.out.println("Admin Found");
-//            return new AdminPrincipal(admin);
-//        }
+        Admin admin = adminRepository.findByEmail(email);
+        if(admin != null){
+            System.out.println("Admin Found");
+            return new AdminPrincipal(admin);
+        }
 //
 //        Doctor doctor = doctorRepository.findByEmail(email);
 //        if(doctor != null){

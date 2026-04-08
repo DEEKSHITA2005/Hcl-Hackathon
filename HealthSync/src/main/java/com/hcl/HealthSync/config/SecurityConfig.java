@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/patient/register","/patient/login","/doctor/login","/admin/login").permitAll()
+                        .requestMatchers("/patient/register","/patient/login","/doctor/login","/admin/login","/admin/register").permitAll()
                         .requestMatchers("/patient/**").authenticated()
                         .requestMatchers("/doctor/**").authenticated()
                         .requestMatchers("/admin/**").authenticated()

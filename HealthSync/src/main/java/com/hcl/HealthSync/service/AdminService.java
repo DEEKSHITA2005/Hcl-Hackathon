@@ -6,5 +6,5 @@ public interface AdminService {
 
     Admin register(Admin admin);
 
-    Admin login(String email, String password);
+    String verify(String email, String password);
 }
